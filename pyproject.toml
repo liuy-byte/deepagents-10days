@@ -1,0 +1,8 @@
+[project]
+name = "deepagents-10days"
+version = "0.1.0"
+description = "Deep Agents 10 天系列教程"
+requires-python = ">=3.11"
+dependencies = [
+    "deepagents>=0.1.0",
+]

@@ -97,10 +97,11 @@ def chat(user_input: str, thread_id: str = "default") -> str:
         "messages": [{"role": "user", "content": message}]
     })
 
-    # 提取回复
-    if result.get("messages"):
-        last_msg = result["messages"][-1]
-        return last_msg.get("content", "抱歉，我没有找到相关信息。")
+    # 提取回复（LangChain 消息对象取 .content）
+    messages = result.get("messages") or []
+    if messages:
+        last_msg = messages[-1]
+        return getattr(last_msg, "content", None) or "抱歉，我没有找到相关信息。"
 
     return "抱歉，处理失败。"
 

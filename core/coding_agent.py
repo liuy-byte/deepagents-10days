@@ -4,7 +4,7 @@ from typing import Any
 
 from deepagents import create_deep_agent
 from deepagents.middleware.permissions import FilesystemPermission
-from deepagents.middleware.human_in_the_loop import InterruptOnConfig
+from deepagents.middleware.subagents import InterruptOnConfig  # noqa: F401
 
 from core.config import AgentConfig
 
@@ -34,12 +34,9 @@ class CodingAgent:
         if self.config.permissions_enabled:
             permissions = [
                 FilesystemPermission(
-                    path="/project/**",
+                    paths=["/project/**", "/tmp/**"],
                     operations=["read", "write"],
-                ),
-                FilesystemPermission(
-                    path="/tmp/**",
-                    operations=["read", "write", "execute"],
+                    mode="allow",
                 ),
             ]
 

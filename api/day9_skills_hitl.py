@@ -6,7 +6,7 @@ Human-in-the-loop：敏感操作需要人工审批
 """
 
 from deepagents import create_deep_agent
-from deepagents.middleware.human_in_the_loop import InterruptOnConfig
+from deepagents.middleware.subagents import InterruptOnConfig
 
 
 def demo_skills():

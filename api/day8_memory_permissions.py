@@ -10,9 +10,9 @@ from deepagents.middleware.permissions import FilesystemPermission
 
 def demo_memory_store():
     """长期记忆：跨对话记住之前的内容"""
-    from langgraph.store.memory import MemoryStore
+    from langgraph.store.memory import InMemoryStore
 
-    store = MemoryStore()
+    store = InMemoryStore()
 
     agent = create_deep_agent(
         model="anthropic:claude-sonnet-4-6",
@@ -37,25 +37,20 @@ def demo_filesystem_permissions():
     # 精确控制文件访问范围
     permissions = [
         FilesystemPermission(
-            path="/project/src/**",      # 代码目录：读写
+            paths=["/project/src/**"],     # 代码目录：读写
             operations=["read", "write"],
+            mode="allow",
         ),
         FilesystemPermission(
-            path="/project/docs/**",       # 文档目录：只读
+            paths=["/project/docs/**", "/project/**/*.py"],  # 文档 + Python 文件：只读
             operations=["read"],
-        ),
-        FilesystemPermission(
-            path="/project/**/*.py",       # Python 文件：只读
-            operations=["read"],
+            mode="allow",
         ),
         # 危险路径：明确禁止
         FilesystemPermission(
-            path="/etc/**",
-            operations=[],                  # 无权限
-        ),
-        FilesystemPermission(
-            path="/home/**",
-            operations=[],                  # 无权限
+            paths=["/etc/**", "/home/**"],
+            operations=["read", "write"],
+            mode="deny",
         ),
     ]
 

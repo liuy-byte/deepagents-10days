@@ -29,15 +29,17 @@ def demo_task_tool():
 
 def demo_subagent_config():
     """子 Agent 配置"""
-    # 预定义子 Agent
+    # 预定义子 Agent（description 是必填字段，主 Agent 会据此决定何时派发任务）
     researcher = SubAgent(
         name="researcher",
+        description="研究员：专门收集和分析信息，适合资料调研、技术背景梳理等任务。",
         model="anthropic:claude-sonnet-4-6",
         system_prompt="你是一个研究员，专门收集和分析信息。",
     )
 
     writer = SubAgent(
         name="writer",
+        description="技术写手：把零散资料整理成清晰简洁的文档，适合写教程、README。",
         model="anthropic:claude-sonnet-4-6",
         system_prompt="你是一个技术写手，擅长写清晰简洁的文档。",
     )

@@ -38,19 +38,23 @@ def demo_acp():
     print("【ACP】在编辑器中集成 Deep Agents")
 
 
-def demo_full实战():
+def demo_full_integration():
     """串联所有能力：RAG 问答机器人"""
-    from langgraph.store.memory import MemoryStore
+    from langgraph.store.memory import InMemoryStore
     from deepagents.middleware.permissions import FilesystemPermission
 
     # 完整配置
     agent = create_deep_agent(
         model="anthropic:claude-sonnet-4-6",
         # 记忆
-        store=MemoryStore(),
+        store=InMemoryStore(),
         # 权限
         permissions=[
-            FilesystemPermission(path="/project/docs/**", operations=["read"]),
+            FilesystemPermission(
+                paths=["/project/docs/**"],
+                operations=["read"],
+                mode="allow",
+            ),
         ],
         # 子 Agent
         subagents=[],
@@ -71,4 +75,4 @@ def demo_full实战():
 
 if __name__ == "__main__":
     print("=== Day 10: CLI + ACP + 实战 ===\n")
-    demo_full实战()
+    demo_full_integration()

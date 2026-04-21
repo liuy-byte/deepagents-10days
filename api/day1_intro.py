@@ -6,11 +6,13 @@ Day 1: 认识 Deep Agents — 与 LangChain/LangGraph 的关系
 """
 
 from deepagents import create_deep_agent
+from langchain_core.tools import tool
 
 
 def demo_basic_agent():
     """最基础的 Deep Agent 演示"""
-    # 定义一个简单工具
+    # 定义一个简单工具（用 @tool 装饰器）
+    @tool
     def get_weather(city: str) -> str:
         """获取城市天气"""
         return f"{city} 今天晴天，25°C"
